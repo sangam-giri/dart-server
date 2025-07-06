@@ -1,4 +1,4 @@
-import 'package:dart_server/models/base_model.dart';
+import 'package:dart_server/core/models/base_model.dart';
 import 'package:shelf/shelf.dart';
 import 'dart:convert';
 

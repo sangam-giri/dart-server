@@ -1,4 +1,4 @@
-import '../models/base_model.dart';
+import 'package:dart_server/core/models/base_model.dart';
 
 abstract class BaseRepository<T extends BaseModel> {
   final String collectionName;

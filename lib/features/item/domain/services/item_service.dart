@@ -1,5 +1,5 @@
-import '../models/item_model.dart';
-import '../repositories/item_repository.dart';
+import 'package:dart_server/features/item/data/item_model.dart';
+import 'package:dart_server/features/item/data/repository/item_repository.dart';
 
 class ItemService {
   final ItemRepository _repository;

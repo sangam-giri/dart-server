@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:dart_server/models/item_model.dart';
+import 'package:dart_server/core/routes/base_router.dart';
+import 'package:dart_server/core/utils/response_utils.dart';
+import 'package:dart_server/features/item/data/item_model.dart';
+import 'package:dart_server/features/item/domain/services/item_service.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
-import '../core/utils/response_utils.dart';
-import '../services/item_service.dart';
-import 'base_router.dart';
 
 class ItemRouter implements BaseRouter {
   final ItemService _service;

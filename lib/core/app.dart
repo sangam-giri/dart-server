@@ -1,11 +1,11 @@
-import 'package:dart_server/routes/base_router.dart';
+import 'package:dart_server/core/routes/base_router.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:dotenv/dotenv.dart';
-import '../config/database.dart';
+import 'config/database.dart';
 import '../routes/item_router.dart';
-import '../services/item_service.dart';
-import '../repositories/item_repository.dart';
+import '../features/item/domain/services/item_service.dart';
+import '../features/item/data/repository/item_repository.dart';
 import 'middlewares/cors_middleware.dart';
 import 'middlewares/logging_middleware.dart';
 

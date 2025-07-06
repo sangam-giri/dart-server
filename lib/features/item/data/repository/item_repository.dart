@@ -1,7 +1,8 @@
+import 'package:dart_server/core/config/database.dart';
+import 'package:dart_server/core/repositories/base_repository.dart';
+import 'package:dart_server/features/item/data/item_model.dart';
 import 'package:mongo_dart/mongo_dart.dart';
-import '../config/database.dart';
-import '../models/item_model.dart';
-import 'base_repository.dart';
+
 
 class ItemRepository extends BaseRepository<Item> {
   ItemRepository() : super('items');

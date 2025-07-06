@@ -1,5 +1,5 @@
+import 'package:dart_server/core/models/base_model.dart';
 import 'package:mongo_dart/mongo_dart.dart';
-import 'base_model.dart';
 
 class Item implements BaseModel {
   @override
