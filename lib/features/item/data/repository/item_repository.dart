@@ -33,7 +33,7 @@ class ItemRepository extends BaseRepository<Item> {
     item.createdAt = DateTime.now().toUtc();
     final result = await DatabaseConfig.collection(
       collectionName,
-    ).insertOne(item.toJson());
+    ).insertOne(item.toJson())  ;
     item.id = result.id as ObjectId;
     return item;
   }
