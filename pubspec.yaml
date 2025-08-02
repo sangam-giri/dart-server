@@ -8,8 +8,13 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
+  dart_jsonwebtoken: ^3.2.0
+  dotenv: ^4.2.0
+  mongo_dart: ^0.10.5
+  path: ^1.9.1
   shelf: ^1.4.2
   shelf_router: ^1.1.4
+  watcher: ^1.1.2
   # path: ^1.8.0
 
 dev_dependencies:
