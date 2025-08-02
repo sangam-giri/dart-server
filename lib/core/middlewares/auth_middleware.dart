@@ -1,35 +1,55 @@
+import 'dart:convert';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:shelf/shelf.dart';
 
 Middleware authMiddleware() {
   return (Handler innerHandler) {
     return (Request request) async {
-      // Skip auth for certain paths
-      if (request.url.path.startsWith('public/')) {
-        return innerHandler(request);
-      }
-
-      // Get auth header
       final authHeader = request.headers['Authorization'];
 
+      // Helper function to create JSON error responses
+      Response jsonErrorResponse(int statusCode, Map<String, dynamic> body) {
+        return Response(
+          statusCode,
+          body: json.encode(body),
+          headers: {'Content-Type': 'application/json'},
+        );
+      }
+
       if (authHeader == null || !authHeader.startsWith('Bearer ')) {
-        return Response(401, body: 'Unauthorized');
+        return jsonErrorResponse(401, {
+          "success": false,
+          "message":
+              "Authentication required. Please provide a valid bearer token 123.",
+          "data": null,
+        });
       }
 
-      // Validate token (in a real app, you'd verify JWT or similar)
-      final token = authHeader.substring(7);
-      if (token.isEmpty) {
-        return Response(401, body: 'Unauthorized');
+      try {
+        final token = authHeader.substring(7);
+        final jwt = JWT.verify(token, SecretKey('your-secret-key'));
+        final userId = jwt.payload['userId'] as String;
+
+        return innerHandler(request.change(context: {'userId': userId}));
+      } on JWTExpiredException {
+        return jsonErrorResponse(401, {
+          "success": false,
+          "message": "Token has expired. Please log in again.",
+          "data": null,
+        });
+      } on JWTException catch (e) {
+        return jsonErrorResponse(401, {
+          "success": false,
+          "message": "Invalid token: ${e.message}",
+          "data": null,
+        });
+      } catch (e) {
+        return jsonErrorResponse(500, {
+          "success": false,
+          "message": "Authentication failed. Please try again.",
+          "data": null,
+        });
       }
-
-      // Add user info to request context
-      final updatedRequest = request.change(
-        context: {
-          ...request.context,
-          'user': {'id': '123', 'token': token},
-        },
-      );
-
-      return innerHandler(updatedRequest);
     };
   };
 }

@@ -1,13 +1,13 @@
 import 'package:shelf/shelf.dart';
 
 // ANSI color codes
-const _reset = '\x1B[0m';
-const _red = '\x1B[31m';
-const _green = '\x1B[32m';
-const _yellow = '\x1B[33m';
-const _blue = '\x1B[34m';
-const _magenta = '\x1B[35m';
-const _cyan = '\x1B[36m';
+const reset = '\x1B[0m';
+const red = '\x1B[31m';
+const green = '\x1B[32m';
+const yellow = '\x1B[33m';
+const blue = '\x1B[34m';
+const magenta = '\x1B[35m';
+const cyan = '\x1B[36m';
 
 Middleware loggingMiddleware() {
   return (Handler innerHandler) {
@@ -20,21 +20,21 @@ Middleware loggingMiddleware() {
       String coloredMethod;
       switch (method) {
         case 'GET':
-          coloredMethod = '$_green$method$_reset';
+          coloredMethod = '$green$method$reset';
         case 'POST':
-          coloredMethod = '$_blue$method$_reset';
+          coloredMethod = '$blue$method$reset';
         case 'PUT':
-          coloredMethod = '$_yellow$method$_reset';
+          coloredMethod = '$yellow$method$reset';
         case 'DELETE':
-          coloredMethod = '$_red$method$_reset';
+          coloredMethod = '$red$method$reset';
         default:
-          coloredMethod = '$_magenta$method$_reset';
+          coloredMethod = '$magenta$method$reset';
       }
 
       // Log request start
       print(
-        '$_cyan[${startTime.toIso8601String()}]$_reset '
-        '$coloredMethod $_cyan$path$_reset - ${_yellow}Started$_reset',
+        '$cyan[${startTime.toIso8601String()}]$reset '
+        '$coloredMethod $cyan$path$reset - ${yellow}Started$reset',
       );
 
       try {
@@ -46,21 +46,21 @@ Middleware loggingMiddleware() {
         final statusCode = response.statusCode;
         String coloredStatus;
         if (statusCode >= 200 && statusCode < 300) {
-          coloredStatus = '$_green$statusCode$_reset';
+          coloredStatus = '$green$statusCode$reset';
         } else if (statusCode >= 400 && statusCode < 500) {
-          coloredStatus = '$_yellow$statusCode$_reset';
+          coloredStatus = '$yellow$statusCode$reset';
         } else if (statusCode >= 500) {
-          coloredStatus = '$_red$statusCode$_reset';
+          coloredStatus = '$red$statusCode$reset';
         } else {
-          coloredStatus = '$_cyan$statusCode$_reset';
+          coloredStatus = '$cyan$statusCode$reset';
         }
 
         // Log successful response
         print(
-          '$_cyan[${endTime.toIso8601String()}]$_reset '
-          '$coloredMethod $_cyan$path$_reset - '
-          '${_green}Completed$_reset '
-          '($_magenta${duration.inMilliseconds}ms$_reset) '
+          '$cyan[${endTime.toIso8601String()}]$reset '
+          '$coloredMethod $cyan$path$reset - '
+          '${green}Completed$reset '
+          '($magenta${duration.inMilliseconds}ms$reset) '
           'Status: $coloredStatus',
         );
 
@@ -71,12 +71,12 @@ Middleware loggingMiddleware() {
 
         // Log error
         print(
-          '$_cyan[${endTime.toIso8601String()}]$_reset '
-          '$coloredMethod $_cyan$path$_reset - '
-          '${_red}Error$_reset '
-          '($_magenta${duration.inMilliseconds}ms$_reset)\n'
-          '${_red}Error: $e$_reset\n'
-          '${_red}Stack Trace: $stackTrace$_reset',
+          '$cyan[${endTime.toIso8601String()}]$reset '
+          '$coloredMethod $cyan$path$reset - '
+          '${red}Error$reset '
+          '($magenta${duration.inMilliseconds}ms$reset)\n'
+          '${red}Error: $e$reset\n'
+          '${red}Stack Trace: $stackTrace$reset',
         );
 
         rethrow;
@@ -84,3 +84,6 @@ Middleware loggingMiddleware() {
     };
   };
 }
+
+log(String msg) => print('$cyan[dev] $msg$reset');
+serverLog(String msg) => print('$green[server] $msg$reset');

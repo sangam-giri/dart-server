@@ -1,3 +1,4 @@
+import 'package:dart_server/core/middlewares/logging_middleware.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
 class DatabaseConfig {
@@ -8,7 +9,7 @@ class DatabaseConfig {
     _db = await Db.create(uri);
     await _db.open();
     _collections = {};
-    print('Connected to MongoDB');
+    serverLog('Connected to MongoDB');
   }
 
   static void registerCollection(String name) {

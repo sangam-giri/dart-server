@@ -3,7 +3,6 @@ import 'package:dart_server/core/repositories/base_repository.dart';
 import 'package:dart_server/features/item/data/item_model.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
-
 class ItemRepository extends BaseRepository<Item> {
   ItemRepository() : super('items');
 
@@ -33,7 +32,7 @@ class ItemRepository extends BaseRepository<Item> {
     item.createdAt = DateTime.now().toUtc();
     final result = await DatabaseConfig.collection(
       collectionName,
-    ).insertOne(item.toJson())  ;
+    ).insertOne(item.toJson());
     item.id = result.id as ObjectId;
     return item;
   }
